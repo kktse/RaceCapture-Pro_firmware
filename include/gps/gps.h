@@ -37,11 +37,18 @@ enum GpsSignalQuality {
         GPS_QUALITY_3D_DGNSS = 3
 };
 
+typedef struct _GpsEcefVelocity {
+        float x;
+        float y;
+        float z;
+} GpsEcefVelocity;
+
 typedef struct _GpsSample {
         enum GpsSignalQuality quality;
         GeoPoint point;
         millis_t time;
         float speed;
+        GpsEcefVelocity velocity;
         float altitude;
         uint8_t satellites;
         uint8_t fixMode;
@@ -98,6 +105,11 @@ int GPS_getSatellitesUsedForPosition();
 
 float getGPSSpeed();
 
+float getGPSSpeedX();
+
+float getGPSSpeedY();
+
+float getGPSSpeedZ();
 /**
  * Returns Date time information as provided by the GPS system.
  */
@@ -148,6 +160,9 @@ tiny_millis_t getMillisSinceFirstFix();
 tiny_millis_t getUptimeAtSample();
 
 float getGpsSpeedInMph();
+float getGpsSpeedXInMph();
+float getGpsSpeedYInMph();
+float getGpsSpeedZInMph();
 
 CPP_GUARD_END
 

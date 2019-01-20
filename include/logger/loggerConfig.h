@@ -388,6 +388,9 @@ typedef struct _GPSConfig {
         ChannelConfig latitude;
         ChannelConfig longitude;
         ChannelConfig speed;
+        ChannelConfig speedX;
+        ChannelConfig speedY;
+        ChannelConfig speedZ;
         ChannelConfig altitude;
         ChannelConfig satellites;
         ChannelConfig quality;
@@ -401,6 +404,9 @@ typedef struct _GPSConfig {
 #define DEFAULT_GPS_LATITUDE_CONFIG {"Latitude", "Degrees", -180, 180, DEFAULT_GPS_SAMPLE_RATE, 6, 0}
 #define DEFAULT_GPS_LONGITUDE_CONFIG {"Longitude", "Degrees", -180, 180, DEFAULT_GPS_SAMPLE_RATE, 6, 0}
 #define DEFAULT_GPS_SPEED_CONFIG {"Speed", "", 0, 150, DEFAULT_GPS_SAMPLE_RATE, 2, 0}
+#define DEFAULT_GPS_SPEEDX_CONFIG {"SpeedX", "", 0, 150, DEFAULT_GPS_SAMPLE_RATE, 2, 0}
+#define DEFAULT_GPS_SPEEDY_CONFIG {"SpeedY", "", 0, 150, DEFAULT_GPS_SAMPLE_RATE, 2, 0}
+#define DEFAULT_GPS_SPEEDZ_CONFIG {"SpeedZ", "", 0, 150, DEFAULT_GPS_SAMPLE_RATE, 2, 0}
 #define DEFAULT_GPS_DISTANCE_CONFIG {"Distance", "", 0, 0, DEFAULT_GPS_SAMPLE_RATE, 3, 0}
 #define DEFAULT_GPS_ALTITUDE_CONFIG {"Altitude", "", 0, 4000, DEFAULT_GPS_SAMPLE_RATE, 1, 0}
 #define DEFAULT_GPS_SATELLITE_CONFIG {"GPSSats", "", 0, 20, DEFAULT_GPS_SAMPLE_RATE, 0, 0}
@@ -412,6 +418,9 @@ typedef struct _GPSConfig {
 		DEFAULT_GPS_LATITUDE_CONFIG,           \
 		DEFAULT_GPS_LONGITUDE_CONFIG,          \
 		DEFAULT_GPS_SPEED_CONFIG,              \
+		DEFAULT_GPS_SPEEDX_CONFIG,              \
+		DEFAULT_GPS_SPEEDY_CONFIG,              \
+		DEFAULT_GPS_SPEEDZ_CONFIG,              \
 		DEFAULT_GPS_ALTITUDE_CONFIG,           \
 		DEFAULT_GPS_SATELLITE_CONFIG,          \
 		DEFAULT_GPS_QUALITY_CONFIG,            \

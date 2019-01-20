@@ -234,6 +234,24 @@ static void* get_speed_getter(const ChannelConfig *cc)
         return UNIT_SPEED_KILOMETERS_HOUR == units_get_unit(cc->units) ?
                getGPSSpeed : getGpsSpeedInMph;
 }
+
+static void* get_speedX_getter(const ChannelConfig *cc)
+{
+        return UNIT_SPEED_KILOMETERS_HOUR == units_get_unit(cc->units) ?
+               getGPSSpeed : getGpsSpeedXInMph;
+}
+
+static void* get_speedY_getter(const ChannelConfig *cc)
+{
+        return UNIT_SPEED_KILOMETERS_HOUR == units_get_unit(cc->units) ?
+               getGPSSpeed : getGpsSpeedYInMph;
+}
+
+static void* get_speedZ_getter(const ChannelConfig *cc)
+{
+        return UNIT_SPEED_KILOMETERS_HOUR == units_get_unit(cc->units) ?
+               getGPSSpeed : getGpsSpeedZInMph;
+}
 #endif
 
 static void* get_distance_getter(const ChannelConfig *cc)
@@ -342,6 +360,15 @@ void init_channel_sample_buffer(LoggerConfig *loggerConfig, struct sample *buff)
         chanCfg = &(gpsConfig->speed);
         sample = processChannelSampleWithFloatGetterNoarg(sample, chanCfg,
                         get_speed_getter(chanCfg));
+        chanCfg = &(gpsConfig->speedX);
+        sample = processChannelSampleWithFloatGetterNoarg(sample, chanCfg,
+                        get_speedX_getter(chanCfg));
+        chanCfg = &(gpsConfig->speedY);
+        sample = processChannelSampleWithFloatGetterNoarg(sample, chanCfg,
+                        get_speedY_getter(chanCfg));
+        chanCfg = &(gpsConfig->speedZ);
+        sample = processChannelSampleWithFloatGetterNoarg(sample, chanCfg,
+                        get_speedZ_getter(chanCfg));
         chanCfg = &(gpsConfig->altitude);
         sample = processChannelSampleWithFloatGetterNoarg(sample, chanCfg,
                         get_altitude_getter(chanCfg));

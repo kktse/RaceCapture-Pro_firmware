@@ -135,6 +135,16 @@ void SampleRecordTest::testPopulateSampleRecord()
         CPPUNIT_ASSERT_EQUAL((float) 0, samples->valueFloat);
 
         samples++;
+
+        CPPUNIT_ASSERT_EQUAL((float) 0, samples->valueFloat);
+
+        samples++;
+        CPPUNIT_ASSERT_EQUAL((float) 0, samples->valueFloat);
+
+        samples++;
+        CPPUNIT_ASSERT_EQUAL((float) 0, samples->valueFloat);
+
+        samples++;
         CPPUNIT_ASSERT_EQUAL((float) 0, samples->valueFloat);
 
         samples++;
@@ -169,7 +179,7 @@ void SampleRecordTest::testInitSampleRecord()
 {
         LoggerConfig *lc = getWorkingLoggerConfig();
 
-        const size_t expectedEnabledChannels = 24;
+        const size_t expectedEnabledChannels = 27;
         size_t channelCount = get_enabled_channel_count(lc);
         CPPUNIT_ASSERT_EQUAL(expectedEnabledChannels, channelCount);
 
@@ -280,6 +290,33 @@ void SampleRecordTest::testInitSampleRecord()
                 CPPUNIT_ASSERT_EQUAL((void *) &gpsConfig->speed,
                                      (void *) ts->cfg);
                 CPPUNIT_ASSERT_EQUAL((void *) getGpsSpeedInMph,
+                                     (void *) ts->get_float_sample);
+                CPPUNIT_ASSERT_EQUAL(SampleData_Float_Noarg, ts->sampleData);
+                ts++;
+        }
+
+        if (gpsConfig->speedX.sampleRate != SAMPLE_DISABLED) {
+                CPPUNIT_ASSERT_EQUAL((void *) &gpsConfig->speedX,
+                                     (void *) ts->cfg);
+                CPPUNIT_ASSERT_EQUAL((void *) getGpsSpeedXInMph,
+                                     (void *) ts->get_float_sample);
+                CPPUNIT_ASSERT_EQUAL(SampleData_Float_Noarg, ts->sampleData);
+                ts++;
+        }
+
+        if (gpsConfig->speedY.sampleRate != SAMPLE_DISABLED) {
+                CPPUNIT_ASSERT_EQUAL((void *) &gpsConfig->speedY,
+                                     (void *) ts->cfg);
+                CPPUNIT_ASSERT_EQUAL((void *) getGpsSpeedYInMph,
+                                     (void *) ts->get_float_sample);
+                CPPUNIT_ASSERT_EQUAL(SampleData_Float_Noarg, ts->sampleData);
+                ts++;
+        }
+
+        if (gpsConfig->speedZ.sampleRate != SAMPLE_DISABLED) {
+                CPPUNIT_ASSERT_EQUAL((void *) &gpsConfig->speedZ,
+                                     (void *) ts->cfg);
+                CPPUNIT_ASSERT_EQUAL((void *) getGpsSpeedZInMph,
                                      (void *) ts->get_float_sample);
                 CPPUNIT_ASSERT_EQUAL(SampleData_Float_Noarg, ts->sampleData);
                 ts++;

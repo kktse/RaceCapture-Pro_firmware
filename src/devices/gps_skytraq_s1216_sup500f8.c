@@ -778,6 +778,9 @@ gps_msg_result_t GPS_device_get_update(GpsSample *gpsSample, struct Serial *seri
                               + (ecef_z_velocity * ecef_z_velocity));
         //convert m/sec to km/hour
         gpsSample->speed = velocity * 3.6;
+        gpsSample->velocity.x = ecef_x_velocity * 3.6;
+        gpsSample->velocity.y = ecef_y_velocity * 3.6;
+        gpsSample->velocity.z = ecef_z_velocity * 3.6;
         gpsSample->altitude = (((float) swap_int32(gpsMsg.navigationDataMessage.mean_sea_level_altitude)) * 0.01) * 3.28084;
 
         //convert GNSS_week to milliseconds and add time of week converted to milliseconds

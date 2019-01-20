@@ -162,6 +162,36 @@ float getGpsSpeedInMph()
         return convert_kph_mph(getGPSSpeed());
 }
 
+float getGPSSpeedX()
+{
+        return g_gpsSnapshot.sample.velocity.x;
+}
+
+float getGpsSpeedXInMph()
+{
+        return convert_kph_mph(getGPSSpeedX());
+}
+
+float getGPSSpeedY()
+{
+        return g_gpsSnapshot.sample.velocity.y;
+}
+
+float getGpsSpeedYInMph()
+{
+        return convert_kph_mph(getGPSSpeedY());
+}
+
+float getGPSSpeedZ()
+{
+        return g_gpsSnapshot.sample.velocity.z;
+}
+
+float getGpsSpeedZInMph()
+{
+        return convert_kph_mph(getGPSSpeedZ());
+}
+
 millis_t getLastFix()
 {
         return g_gpsSnapshot.sample.time;
