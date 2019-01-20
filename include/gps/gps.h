@@ -25,6 +25,7 @@
 #include "cpp_guard.h"
 #include "dateTime.h"
 #include "geopoint.h"
+#include "geoVector.h"
 #include "led.h"
 #include "serial.h"
 
@@ -37,18 +38,12 @@ enum GpsSignalQuality {
         GPS_QUALITY_3D_DGNSS = 3
 };
 
-typedef struct _GpsEcefVelocity {
-        float x;
-        float y;
-        float z;
-} GpsEcefVelocity;
-
 typedef struct _GpsSample {
         enum GpsSignalQuality quality;
         GeoPoint point;
         millis_t time;
         float speed;
-        GpsEcefVelocity velocity;
+        GeoVector velocity;
         float altitude;
         uint8_t satellites;
         uint8_t fixMode;
@@ -140,6 +135,11 @@ GeoPoint getGeoPoint();
 GeoPoint getPreviousGeoPoint();
 
 /**
+ * @return The current velocity vector.
+ */
+GeoVector getVelocityVector();
+
+/**
  * @return the current GPS Sample
  */
 GpsSample getGpsSample();
@@ -160,8 +160,11 @@ tiny_millis_t getMillisSinceFirstFix();
 tiny_millis_t getUptimeAtSample();
 
 float getGpsSpeedInMph();
+
 float getGpsSpeedXInMph();
+
 float getGpsSpeedYInMph();
+
 float getGpsSpeedZInMph();
 
 CPP_GUARD_END

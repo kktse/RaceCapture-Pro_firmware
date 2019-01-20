@@ -20,6 +20,7 @@
  */
 
 #include "convert.h"
+#include "geoVector.h"
 #include "gps.h"
 #include "gps_device.h"
 #include <string.h>
@@ -157,6 +158,7 @@ float getGPSSpeed()
         return g_gpsSnapshot.sample.speed;
 }
 
+
 float getGpsSpeedInMph()
 {
         return convert_kph_mph(getGPSSpeed());
@@ -197,6 +199,7 @@ millis_t getLastFix()
         return g_gpsSnapshot.sample.time;
 }
 
+
 GeoPoint getGeoPoint()
 {
         return g_gpsSnapshot.sample.point;
@@ -205,6 +208,11 @@ GeoPoint getGeoPoint()
 GeoPoint getPreviousGeoPoint()
 {
         return g_gpsSnapshot.previousPoint;
+}
+
+GeoVector getVelocityVector()
+{
+        return g_gpsSnapshot.sample.velocity;
 }
 
 GpsSample getGpsSample()
@@ -245,5 +253,9 @@ void GPS_sample_update(GpsSample *newSample)
         g_gpsSnapshot.previous_speed = prev_speed;
         g_gpsSnapshot.delta_last_sample =
                 g_gpsSnapshot.deltaFirstFix - prev_deltaff;
+
+        /* Convert velocity from ECEF to NED */
+        convertECEFToNED(&g_gpsSnapshot.sample.velocity,
+                &g_gpsSnapshot.sample.point);
 }
 
