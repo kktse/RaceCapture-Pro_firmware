@@ -47,12 +47,12 @@ int convertECEFToNED(GeoVector * ecef, const GeoPoint *p)
 
         const float x = - sinLat * cosLon * ecef->x
                         - sinLat * sinLon * ecef->y
-                        + cosLat;
+                        + cosLat * ecef->z;
         const float y = - sinLon * ecef->x
                         + cosLon * ecef->y;
         const float z = - cosLat * cosLon * ecef->x
                         - cosLat * cosLon * ecef->y
-                        - sinLat;
+                        - sinLat * ecef->z;
 
         ecef->x = x;
         ecef->y = y;

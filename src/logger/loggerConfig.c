@@ -559,6 +559,15 @@ unsigned int getHighestSampleRate(LoggerConfig *config)
         sr = gpsConfig->speed.sampleRate;
         s = getHigherSampleRate(sr, s);
 
+        sr = gpsConfig->speedX.sampleRate;
+        s = getHigherSampleRate(sr, s);
+
+        sr = gpsConfig->speedY.sampleRate;
+        s = getHigherSampleRate(sr, s);
+
+        sr = gpsConfig->speedZ.sampleRate;
+        s = getHigherSampleRate(sr, s);
+
         sr = gpsConfig->altitude.sampleRate;
         s = getHigherSampleRate(sr, s);
 

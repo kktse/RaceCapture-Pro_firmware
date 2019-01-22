@@ -1261,6 +1261,9 @@ static unsigned short getGpsConfigHighSampleRate(GPSConfig *cfg)
         rate = getHigherSampleRate(rate, cfg->latitude.sampleRate);
         rate = getHigherSampleRate(rate, cfg->longitude.sampleRate);
         rate = getHigherSampleRate(rate, cfg->speed.sampleRate);
+        rate = getHigherSampleRate(rate, cfg->speedX.sampleRate);
+        rate = getHigherSampleRate(rate, cfg->speedY.sampleRate);
+        rate = getHigherSampleRate(rate, cfg->speedZ.sampleRate);
         rate = getHigherSampleRate(rate, cfg->distance.sampleRate);
         rate = getHigherSampleRate(rate, cfg->altitude.sampleRate);
         rate = getHigherSampleRate(rate, cfg->satellites.sampleRate);
@@ -1284,6 +1287,9 @@ int api_getGpsConfig(struct Serial *serial, const jsmntok_t *json)
                                gpsCfg->longitude.sampleRate != SAMPLE_DISABLED;
         json_int(serial, "pos",  posEnabled, 1);
         json_int(serial, "speed", gpsCfg->speed.sampleRate != SAMPLE_DISABLED, 1);
+        json_int(serial, "speedX", gpsCfg->speedX.sampleRate != SAMPLE_DISABLED, 1);
+        json_int(serial, "speedY", gpsCfg->speedY.sampleRate != SAMPLE_DISABLED, 1);
+        json_int(serial, "speedZ", gpsCfg->speedZ.sampleRate != SAMPLE_DISABLED, 1);
         json_int(serial, "dist", gpsCfg->distance.sampleRate != SAMPLE_DISABLED, 1);
         json_int(serial, "alt", gpsCfg->altitude.sampleRate != SAMPLE_DISABLED, 1);
         json_int(serial, "sats", gpsCfg->satellites.sampleRate != SAMPLE_DISABLED, 1);
@@ -1293,7 +1299,10 @@ int api_getGpsConfig(struct Serial *serial, const jsmntok_t *json)
         json_objStartString(serial, "units");
         json_string(serial, "alt", gpsCfg->altitude.units, 1);
         json_string(serial, "dist", gpsCfg->distance.units, 1);
-        json_string(serial, "speed", gpsCfg->speed.units, 0);
+        json_string(serial, "speed", gpsCfg->speed.units, 1);
+        json_string(serial, "speedX", gpsCfg->speedX.units, 1);
+        json_string(serial, "speedY", gpsCfg->speedY.units, 1);
+        json_string(serial, "speedZ", gpsCfg->speedZ.units, 0);
         json_objEnd(serial, 0);
 
         json_objEnd(serial, 0);
@@ -1314,6 +1323,12 @@ static void gps_set_units(const jsmntok_t *json, GPSConfig *cfg)
         jsmn_exists_set_val_string(json, "dist", &cfg->distance.units,
                                    DEFAULT_UNITS_LENGTH, true);
         jsmn_exists_set_val_string(json, "speed", &cfg->speed.units,
+                                   DEFAULT_UNITS_LENGTH, true);
+        jsmn_exists_set_val_string(json, "speedX", &cfg->speedX.units,
+                                   DEFAULT_UNITS_LENGTH, true);
+        jsmn_exists_set_val_string(json, "speedY", &cfg->speedY.units,
+                                   DEFAULT_UNITS_LENGTH, true);
+        jsmn_exists_set_val_string(json, "speedZ", &cfg->speedZ.units,
                                    DEFAULT_UNITS_LENGTH, true);
 
         /* Altitude supports only Meters or Feet */
@@ -1352,6 +1367,9 @@ int api_setGpsConfig(struct Serial *serial, const jsmntok_t *json)
         gpsConfigTestAndSet(json, &(gpsCfg->latitude), "pos", sr);
         gpsConfigTestAndSet(json, &(gpsCfg->longitude), "pos", sr);
         gpsConfigTestAndSet(json, &(gpsCfg->speed), "speed", sr);
+        gpsConfigTestAndSet(json, &(gpsCfg->speedX), "speedX", sr);
+        gpsConfigTestAndSet(json, &(gpsCfg->speedY), "speedY", sr);
+        gpsConfigTestAndSet(json, &(gpsCfg->speedZ), "speedZ", sr);
         gpsConfigTestAndSet(json, &(gpsCfg->distance), "dist", sr);
         gpsConfigTestAndSet(json, &(gpsCfg->altitude), "alt", sr);
         gpsConfigTestAndSet(json, &(gpsCfg->satellites), "sats", sr);
