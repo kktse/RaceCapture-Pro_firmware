@@ -238,19 +238,19 @@ static void* get_speed_getter(const ChannelConfig *cc)
 static void* get_speedX_getter(const ChannelConfig *cc)
 {
         return UNIT_SPEED_KILOMETERS_HOUR == units_get_unit(cc->units) ?
-               getGPSSpeed : getGpsSpeedXInMph;
+               getGPSSpeedX : getGpsSpeedXInMph;
 }
 
 static void* get_speedY_getter(const ChannelConfig *cc)
 {
         return UNIT_SPEED_KILOMETERS_HOUR == units_get_unit(cc->units) ?
-               getGPSSpeed : getGpsSpeedYInMph;
+               getGPSSpeedY : getGpsSpeedYInMph;
 }
 
 static void* get_speedZ_getter(const ChannelConfig *cc)
 {
         return UNIT_SPEED_KILOMETERS_HOUR == units_get_unit(cc->units) ?
-               getGPSSpeed : getGpsSpeedZInMph;
+               getGPSSpeedZ : getGpsSpeedZInMph;
 }
 #endif
 

@@ -838,6 +838,9 @@ void LoggerApiTest::testGetGpsConfigFile(string filename)
         populateChannelConfig(&gpsCfg->latitude, 0, 100);
         populateChannelConfig(&gpsCfg->longitude, 0, 100);
         populateChannelConfig(&gpsCfg->speed, 1, 100);
+        populateChannelConfig(&gpsCfg->speedX, 1, 100);
+        populateChannelConfig(&gpsCfg->speedY, 1, 100);
+        populateChannelConfig(&gpsCfg->speedZ, 1, 100);
         populateChannelConfig(&gpsCfg->distance, 2, 100);
         populateChannelConfig(&gpsCfg->altitude, 3, 100);
         populateChannelConfig(&gpsCfg->satellites, 0, 100);
@@ -854,6 +857,9 @@ void LoggerApiTest::testGetGpsConfigFile(string filename)
 
         CPPUNIT_ASSERT_EQUAL(1, (int)(Number)gpsCfgJson["pos"]);
         CPPUNIT_ASSERT_EQUAL(1, (int)(Number)gpsCfgJson["speed"]);
+        CPPUNIT_ASSERT_EQUAL(1, (int)(Number)gpsCfgJson["speedX"]);
+        CPPUNIT_ASSERT_EQUAL(1, (int)(Number)gpsCfgJson["speedY"]);
+        CPPUNIT_ASSERT_EQUAL(1, (int)(Number)gpsCfgJson["speedZ"]);
         CPPUNIT_ASSERT_EQUAL(1, (int)(Number)gpsCfgJson["dist"]);
         CPPUNIT_ASSERT_EQUAL(1, (int)(Number)gpsCfgJson["alt"]);
         CPPUNIT_ASSERT_EQUAL(1, (int)(Number)gpsCfgJson["sats"]);

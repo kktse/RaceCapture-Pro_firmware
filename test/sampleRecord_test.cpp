@@ -266,7 +266,6 @@ void SampleRecordTest::testInitSampleRecord()
                 ts++;
         }
 
-
         GPSConfig *gpsConfig = &(lc->GPSConfigs);
         if (gpsConfig->latitude.sampleRate != SAMPLE_DISABLED) {
                 CPPUNIT_ASSERT_EQUAL((void *) &gpsConfig->latitude,
