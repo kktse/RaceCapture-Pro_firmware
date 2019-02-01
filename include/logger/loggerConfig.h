@@ -194,6 +194,10 @@ enum imu_channel {
         IMU_CHANNEL_YAW = 3,
         IMU_CHANNEL_PITCH = 4,
         IMU_CHANNEL_ROLL = 5,
+        IMU_CHANNEL_MAG_X = 6,
+        IMU_CHANNEL_MAG_Y = 7,
+        IMU_CHANNEL_MAG_Z = 8,
+        IMU_CHANNEL_COMPASS = 9,
 };
 
 typedef struct _ImuConfig {
@@ -212,9 +216,14 @@ typedef struct _ImuConfig {
  */
 #define DEFAULT_ACCEL_ZERO	0
 #define DEFAULT_GYRO_ZERO	0
+#define DEFAULT_MAG_ZERO	0
+#define DEFAULT_COMPASS_ZERO	0
 
 #define IMU_ACCEL_CH_CONFIG(name) {name, "G", -3, 3, SAMPLE_25Hz, 2, 0}
-#define IMU_GYRO_CH_CONFIG(name) {name, "Deg/Sec", -120, 120, SAMPLE_25Hz, 0, 0}
+#define IMU_GYRO_CH_CONFIG(name) {name, "Deg/Sec", -120, 120, SAMPLE_25Hz, 1, 0}
+#define IMU_MAG_CH_CONFIG(name) {name, "uT", -1200, 1200, SAMPLE_25Hz, 1, 0}
+#define IMU_COMPASS_CH_CONFIG(name) {name, "Deg", 0, 360, SAMPLE_25Hz, 1, 0}
+
 #define IMU_ACCEL_CONFIG(name, mode, chan) {    \
                 IMU_ACCEL_CH_CONFIG(name),      \
                         mode,                   \
@@ -231,6 +240,22 @@ typedef struct _ImuConfig {
                         0.1F                    \
                         }
 
+#define IMU_MAG_CONFIG(name, mode, chan) {      \
+                IMU_MAG_CH_CONFIG(name),        \
+                        mode,                   \
+                        chan,                   \
+                        DEFAULT_MAG_ZERO,       \
+                        0.1F                    \
+                        }
+
+#define IMU_COMPASS_CONFIG(name, mode, chan) {  \
+                IMU_COMPASS_CH_CONFIG(name),    \
+                        mode,                   \
+                        chan,                   \
+                        DEFAULT_COMPASS_ZERO,   \
+                        0.1F                    \
+                        }
+
 #define IMU_CONFIG_DEFAULTS {                                                 \
                 IMU_ACCEL_CONFIG("AccelX", IMU_MODE_NORMAL, IMU_CHANNEL_X), \
                 IMU_ACCEL_CONFIG("AccelY", IMU_MODE_NORMAL, IMU_CHANNEL_Y), \
@@ -238,6 +263,10 @@ typedef struct _ImuConfig {
                 IMU_GYRO_CONFIG("Yaw", IMU_MODE_NORMAL, IMU_CHANNEL_YAW),   \
                 IMU_GYRO_CONFIG("Pitch", IMU_MODE_NORMAL, IMU_CHANNEL_PITCH), \
                 IMU_GYRO_CONFIG("Roll", IMU_MODE_NORMAL, IMU_CHANNEL_ROLL),   \
+                IMU_MAG_CONFIG("MagX", IMU_MODE_NORMAL, IMU_CHANNEL_MAG_X),   \
+                IMU_MAG_CONFIG("MagY", IMU_MODE_NORMAL, IMU_CHANNEL_MAG_Y), \
+                IMU_MAG_CONFIG("MagZ", IMU_MODE_NORMAL, IMU_CHANNEL_MAG_Z),   \
+                IMU_COMPASS_CONFIG("Compass", IMU_MODE_NORMAL, IMU_CHANNEL_COMPASS),   \
                 }
 
 typedef struct _PWMConfig {

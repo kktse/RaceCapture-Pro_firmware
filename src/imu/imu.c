@@ -85,6 +85,11 @@ static void imu_flush_filter(size_t physicalChannel)
 void imu_calibrate_zero()
 {
         for (size_t logicalChannel = 0; logicalChannel < CONFIG_IMU_CHANNELS; logicalChannel++) {
+                /* compass can't be calibrated in the conventional sense*/
+                if ((logicalChannel == IMU_CHANNEL_COMPASS) || (logicalChannel == IMU_CHANNEL_MAG_X) ||
+                    (logicalChannel == IMU_CHANNEL_MAG_Y) || (logicalChannel == IMU_CHANNEL_MAG_Z))
+                        continue;
+
                 ImuConfig * c = getImuConfigChannel(logicalChannel);
                 size_t physicalChannel = c->physicalChannel;
                 imu_flush_filter(physicalChannel);

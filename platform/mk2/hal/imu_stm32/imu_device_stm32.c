@@ -13,6 +13,8 @@
 
 #define IMU_DEVICE_COUNTS_PER_G 		16384
 #define IMU_DEVICE_COUNTS_PER_DEGREE_PER_SEC	131.072
+#define IMU_DEVICE_COUNTS_PER_DEGREE    1
+#define IMU_DEVICE_COUNTS_PER_MICROTELSA    0.29296875
 
 #define ACCEL_MAX_RANGE 	ACCEL_COUNTS_PER_G * 4
 #define IMU_TASK_PRIORITY	(tskIDLE_PRIORITY + 2)
@@ -40,7 +42,7 @@ static void imu_update_task(void *params)
 
     i2c_init(i2c1, 400000);
 
-    res = is9150_init(i2c1, IS_9150_ADDR << 1);
+    res = is9150_init(i2c1, IS_9150_ADDR << 1, IS_9150_MAG_ADDR << 1);
     pr_info("IMU: init res=");
     pr_info_int(res);
     pr_info("\r\n");
@@ -93,6 +95,14 @@ int imu_device_read(enum imu_channel channel)
                 return read_buf->gyro.gyro_x;
         case IMU_CHANNEL_YAW:
                 return -read_buf->gyro.gyro_z;
+        case IMU_CHANNEL_MAG_X:
+                return -read_buf->mag.mag_x;
+        case IMU_CHANNEL_MAG_Y:
+                return -read_buf->mag.mag_y;
+        case IMU_CHANNEL_MAG_Z:
+                return -read_buf->mag.mag_z;
+        case IMU_CHANNEL_COMPASS:
+                return read_buf->mag.compass;
         default:
                 return 0;
         }
@@ -100,16 +110,23 @@ int imu_device_read(enum imu_channel channel)
 
 float imu_device_counts_per_unit(enum imu_channel channel)
 {
-    switch(channel) {
-    case IMU_CHANNEL_YAW:
-    case IMU_CHANNEL_PITCH:
-    case IMU_CHANNEL_ROLL:
-        return IMU_DEVICE_COUNTS_PER_DEGREE_PER_SEC;
-    case IMU_CHANNEL_X:
-    case IMU_CHANNEL_Y:
-    case IMU_CHANNEL_Z:
-        return IMU_DEVICE_COUNTS_PER_G;
-    default:
-        return 0.0;
-    }
+        switch(channel) {
+        case IMU_CHANNEL_YAW:
+        case IMU_CHANNEL_PITCH:
+        case IMU_CHANNEL_ROLL:
+                return IMU_DEVICE_COUNTS_PER_DEGREE_PER_SEC;
+        case IMU_CHANNEL_X:
+        case IMU_CHANNEL_Y:
+        case IMU_CHANNEL_Z:
+                return IMU_DEVICE_COUNTS_PER_G;
+        case IMU_CHANNEL_MAG_X:
+        case IMU_CHANNEL_MAG_Y:
+        case IMU_CHANNEL_MAG_Z:
+                return IMU_DEVICE_COUNTS_PER_MICROTELSA;
+        case IMU_CHANNEL_COMPASS:
+                return IMU_DEVICE_COUNTS_PER_DEGREE;
+        default:
+                return 0.0;
+        }
 }
+
