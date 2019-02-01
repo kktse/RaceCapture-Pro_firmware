@@ -28,35 +28,3 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-/**
- * Converts a given value to radians.
- * @param val The provided value in non-radian form.
- * @return The radian value.
- */
-static float toRad(float val)
-{
-        return val * (M_PI / 180.0);
-}
-
-int convertECEFToNED(GeoVector * ecef, const GeoPoint *p)
-{
-        const float sinLat = sin(toRad(p->latitude));
-        const float sinLon = sin(toRad(p->longitude));
-        const float cosLat = cos(toRad(p->latitude));
-        const float cosLon = cos(toRad(p->longitude));
-
-        const float x = - sinLat * cosLon * ecef->x
-                        - sinLat * sinLon * ecef->y
-                        + cosLat * ecef->z;
-        const float y = - sinLon * ecef->x
-                        + cosLon * ecef->y;
-        const float z = - cosLat * cosLon * ecef->x
-                        - cosLat * cosLon * ecef->y
-                        - sinLat * ecef->z;
-
-        ecef->x = x;
-        ecef->y = y;
-        ecef->z = z;
-
-        return 0;
-}

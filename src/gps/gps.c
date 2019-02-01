@@ -254,8 +254,5 @@ void GPS_sample_update(GpsSample *newSample)
         g_gpsSnapshot.delta_last_sample =
                 g_gpsSnapshot.deltaFirstFix - prev_deltaff;
 
-        /* Convert velocity from ECEF to NED */
-        convertECEFToNED(&g_gpsSnapshot.sample.velocity,
-                &g_gpsSnapshot.sample.point);
 }
 

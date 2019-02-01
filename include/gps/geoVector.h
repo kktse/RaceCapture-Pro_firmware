@@ -35,13 +35,6 @@ typedef struct _GeoVector {
         float z;
 } GeoVector;
 
-/**
- * Converts a vector given in ECEF to NED.
- * Based on Chapter 2 of 'Unmanned Rotorcraft Systems'
- * https://www.springer.com/gp/book/9780857296344
- */
-int convertECEFToNED(GeoVector * ecef, const GeoPoint *p);
-
 CPP_GUARD_END
 
 #endif /* GEOVECTOR_H_ */
