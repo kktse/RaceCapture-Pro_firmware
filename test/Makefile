@@ -204,6 +204,7 @@ $(RCP_SRC)/filter/filter.c \
 $(RCP_SRC)/gps/dateTime.c \
 $(RCP_SRC)/gps/geoCircle.c \
 $(RCP_SRC)/gps/geoTrigger.c \
+$(RCP_SRC)/gps/geoVector.c \
 $(RCP_SRC)/gps/geopoint.c \
 $(RCP_SRC)/gps/gps.c \
 $(RCP_SRC)/gsm/gsm.c \

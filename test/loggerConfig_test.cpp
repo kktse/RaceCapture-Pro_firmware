@@ -183,6 +183,24 @@ void LoggerConfigTest::testLoggerInitGpsConfig()
                              string(cc->units));
         CPPUNIT_ASSERT(cc->sampleRate == DEFAULT_GPS_SAMPLE_RATE);
 
+        cc = &lc->GPSConfigs.speedX;
+        CPPUNIT_ASSERT_EQUAL(string("SpeedX"), string(cc->label));
+        CPPUNIT_ASSERT_EQUAL(string(units_get_label(UNIT_SPEED_MILES_HOUR)),
+                             string(cc->units));
+        CPPUNIT_ASSERT(cc->sampleRate == DEFAULT_GPS_SAMPLE_RATE);
+
+        cc = &lc->GPSConfigs.speedY;
+        CPPUNIT_ASSERT_EQUAL(string("SpeedY"), string(cc->label));
+        CPPUNIT_ASSERT_EQUAL(string(units_get_label(UNIT_SPEED_MILES_HOUR)),
+                             string(cc->units));
+        CPPUNIT_ASSERT(cc->sampleRate == DEFAULT_GPS_SAMPLE_RATE);
+
+        cc = &lc->GPSConfigs.speedZ;
+        CPPUNIT_ASSERT_EQUAL(string("SpeedZ"), string(cc->label));
+        CPPUNIT_ASSERT_EQUAL(string(units_get_label(UNIT_SPEED_MILES_HOUR)),
+                             string(cc->units));
+        CPPUNIT_ASSERT(cc->sampleRate == DEFAULT_GPS_SAMPLE_RATE);
+
         cc = &lc->GPSConfigs.distance;
         CPPUNIT_ASSERT_EQUAL(string("Distance"), string(cc->label));
         CPPUNIT_ASSERT_EQUAL(string(units_get_label(UNIT_LENGTH_MILES)),

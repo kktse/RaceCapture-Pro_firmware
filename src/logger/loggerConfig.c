@@ -252,6 +252,9 @@ void logger_config_reset_gps_config(GPSConfig *cfg)
         /* Setting here b/c this now uses units.h labels */
         strcpy(cfg->altitude.units, units_get_label(UNIT_LENGTH_FEET));
         strcpy(cfg->speed.units, units_get_label(UNIT_SPEED_MILES_HOUR));
+        strcpy(cfg->speedX.units, units_get_label(UNIT_SPEED_MILES_HOUR));
+        strcpy(cfg->speedY.units, units_get_label(UNIT_SPEED_MILES_HOUR));
+        strcpy(cfg->speedZ.units, units_get_label(UNIT_SPEED_MILES_HOUR));
 #endif
         strcpy(cfg->distance.units, units_get_label(UNIT_LENGTH_MILES));
 }
@@ -556,6 +559,15 @@ unsigned int getHighestSampleRate(LoggerConfig *config)
         sr = gpsConfig->speed.sampleRate;
         s = getHigherSampleRate(sr, s);
 
+        sr = gpsConfig->speedX.sampleRate;
+        s = getHigherSampleRate(sr, s);
+
+        sr = gpsConfig->speedY.sampleRate;
+        s = getHigherSampleRate(sr, s);
+
+        sr = gpsConfig->speedZ.sampleRate;
+        s = getHigherSampleRate(sr, s);
+
         sr = gpsConfig->altitude.sampleRate;
         s = getHigherSampleRate(sr, s);
 
@@ -661,6 +673,9 @@ size_t get_enabled_channel_count(LoggerConfig *loggerConfig)
         if (gpsConfigs->latitude.sampleRate != SAMPLE_DISABLED) channels++;
         if (gpsConfigs->longitude.sampleRate != SAMPLE_DISABLED) channels++;
         if (gpsConfigs->speed.sampleRate != SAMPLE_DISABLED) channels++;
+        if (gpsConfigs->speedX.sampleRate != SAMPLE_DISABLED) channels++;
+        if (gpsConfigs->speedY.sampleRate != SAMPLE_DISABLED) channels++;
+        if (gpsConfigs->speedZ.sampleRate != SAMPLE_DISABLED) channels++;
         if (gpsConfigs->altitude.sampleRate != SAMPLE_DISABLED) channels++;
         if (gpsConfigs->satellites.sampleRate != SAMPLE_DISABLED) channels++;
         if (gpsConfigs->quality.sampleRate != SAMPLE_DISABLED) channels++;

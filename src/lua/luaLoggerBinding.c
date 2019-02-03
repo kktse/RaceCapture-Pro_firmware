@@ -545,6 +545,14 @@ static int lua_get_gps_speed(lua_State *L)
         return 1;
 }
 
+static int lua_get_gps_velocity(lua_State *L)
+{
+        lua_pushnumber(L,getGPSSpeedX());
+        lua_pushnumber(L,getGPSSpeedY());
+        lua_pushnumber(L,getGPSSpeedZ());
+        return 3;
+}
+
 static int lua_get_gps_quality(lua_State *L)
 {
         lua_pushnumber(L,GPS_getQuality());
@@ -1015,6 +1023,7 @@ void registerLuaLoggerBindings(lua_State *L)
         lua_registerlight(L, "getGpsSats", lua_get_gps_sat_count);
         lua_registerlight(L, "getGpsPos", lua_get_gps_position);
         lua_registerlight(L, "getGpsSpeed", lua_get_gps_speed);
+        lua_registerlight(L, "getGpsVelocity", lua_get_gps_velocity);
         lua_registerlight(L, "getGpsQuality", lua_get_gps_quality);
         lua_registerlight(L, "getGpsDist", lua_get_gps_distance);
         lua_registerlight(L, "getGpsAltitude", lua_get_gps_altitude);

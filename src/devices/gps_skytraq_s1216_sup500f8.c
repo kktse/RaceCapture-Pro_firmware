@@ -32,6 +32,10 @@
 #include "gps_device.h"
 #include "gps_device_lld.h"
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 /* UNIX time (epoch 1/1/1970) at the start of GNSS epoch (1/6/1980) */
 #define GNSS_EPOCH_IN_UNIX_EPOCH 315964800
 
@@ -779,6 +783,20 @@ gps_msg_result_t GPS_device_get_update(GpsSample *gpsSample, struct Serial *seri
         //convert m/sec to km/hour
         gpsSample->speed = velocity * 3.6;
         gpsSample->altitude = (((float) swap_int32(gpsMsg.navigationDataMessage.mean_sea_level_altitude)) * 0.01) * 3.28084;
+
+        float sinLat = sin(gpsSample->point.latitude * (M_PI / 180.0));
+        float sinLon = sin(gpsSample->point.longitude * (M_PI / 180.0));
+        float cosLat = cos(gpsSample->point.latitude * (M_PI / 180.0));
+        float cosLon = cos(gpsSample->point.longitude * (M_PI / 180.0));
+
+        //convert from ECEF to NED coordinates
+        gpsSample->velocity.x = (-sinLat * cosLon * ecef_x_velocity
+                                - sinLat * sinLon * ecef_y_velocity
+                                + cosLat * ecef_z_velocity) * 3.6;
+        gpsSample->velocity.y = (-sinLon * ecef_x_velocity + cosLon * ecef_y_velocity) * 3.6;
+        gpsSample->velocity.z = (-cosLat * cosLon * ecef_x_velocity
+                                - cosLat * sinLon * ecef_y_velocity
+                                - sinLat * ecef_z_velocity) * 3.6;
 
         //convert GNSS_week to milliseconds and add time of week converted to milliseconds
         uint16_t GNSS_week = swap_uint16(gpsMsg.navigationDataMessage.GNSS_week);
